@@ -1,6 +1,30 @@
-@MyBlog.API_HostAddress = http://localhost:5192
+@MyBlog.API_HostAddress = https://localhost:7165
 
-GET {{MyBlog.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
 
 ###
+GET {{MyBlog.API_HostAddress}}/api/categories
+Accept:application/json
+
+
+###
+PUT {{MyBlog.API_HostAddress}}/api/categories/b489c092-970a-4f06-8736-de60504cd718
+Content-Type: application/json
+
+{
+  "name": "Yazýlým ve Teknoloji",
+  "slug": "teknoloji",
+  "color": "#336699",
+  "displayOrder": 1
+}
+
+###
+POST {{MyBlog.API_HostAddress}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Teknoloji",
+  "slug": "teknoloji",
+  "color": "#336699",
+  "displayOrder": 2
+}
