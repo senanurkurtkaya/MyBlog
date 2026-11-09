@@ -32,3 +32,27 @@ POST {{MyBlog.API_HostAddress}}/api/posts/e1204050-a730-487f-aef1-f719017d8705/p
 ###
 GET {{MyBlog.API_HostAddress}}/api/posts/yayindan-kaldirma-testi
 Accept: application/json
+
+###
+POST {{MyBlog.API_HostAddress}}/api/posts
+Content-Type: application/json
+
+{
+  "title": "Boþ Taslak Testi",
+  "slug": "bos-taslak-yayin-testi",
+  "authorId": "11111111-1111-4111-8111-111111111111",
+  "contentMarkdown": ""
+}
+###
+POST {{MyBlog.API_HostAddress}}/api/posts/4993b4d8-48c0-4474-8891-7f1240fa83c6/publish
+
+###
+PUT {{MyBlog.API_HostAddress}}/api/posts/e1204050-a730-487f-aef1-f719017d8705
+Content-Type: application/json
+
+{
+"title": "AAAAAAAAAABBBBBBBBBBCCCCCCCCCCDDDDDDDDDDEEEEEEEEEEFFFFFFFFFFGGGGGGGGGGHHHHHHHHHHIIIIIIIIIIJJJJJJJJJJKKKKKKKKKKLLLLLLLLLLMMMMMMMMMMNNNNNNNNNNOOOOOOOOOOPPPPPPPPPPQQQQQQQQQQRRRRRRRRRRSSSSSSSSSSTTTTTTTTTTZ",
+  "slug": "yayindan-kaldirma-testi",
+  "summary": "Yazý düzenleme testi.",
+  "contentMarkdown": "# Yeni baþlýk\n\nYazýnýn içeriði güncellendi."
+}

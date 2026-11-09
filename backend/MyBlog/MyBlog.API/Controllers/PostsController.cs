@@ -59,14 +59,22 @@ namespace MyBlog.API.Controllers
         [Route("{id:guid}/publish")]
         public async Task<IActionResult> Publish(Guid id , CancellationToken cancellationToken)
         {
-           var published = await _postService.PublishAsync(id, cancellationToken);
-
-            if (!published)
+            try
             {
-                return NotFound();
-            }
+                var published = await _postService.PublishAsync(id, cancellationToken);
 
-            return NoContent();
+                if (!published)
+                {
+                    return NotFound();
+                }
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
+            }
+           
          
         }
 
@@ -99,7 +107,7 @@ namespace MyBlog.API.Controllers
             catch (ArgumentException ex)
             {
 
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
             catch(InvalidOperationException ex)
             {
