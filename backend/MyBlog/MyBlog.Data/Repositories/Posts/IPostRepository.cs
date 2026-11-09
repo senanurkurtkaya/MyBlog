@@ -13,5 +13,9 @@ namespace MyBlog.Data.Repositories.Posts
         
         public void Add(Post post);
         Task<bool> ExistsBySlugAsync(string slug, CancellationToken cancellationToken = default);
+        Task<List<Post>> GetPublishedAsync(CancellationToken cancellationToken =default);
+        Task<Post?> GetByIdAsync(Guid id , CancellationToken cancellationToken = default);
+        Task<Post?> GetPublishedBySlugAsync(string slug, CancellationToken cancellationToken = default);
+        
     }
 }

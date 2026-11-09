@@ -27,5 +27,22 @@ namespace MyBlog.Data.Repositories.Posts
         {
            return _dbContext.Posts.AnyAsync(x => x.Slug == slug , cancellationToken);
         }
+
+        public async Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Posts.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
+
+        public async Task<List<Post>> GetPublishedAsync(CancellationToken cancellationToken = default)
+        {
+            var query = _dbContext.Posts.Where(x => x.Status == Domain.Enums.PostStatus.Published);
+            return await query.ToListAsync(cancellationToken);
+        }
+
+        public Task<Post?> GetPublishedBySlugAsync(string slug, CancellationToken cancellationToken = default)
+        {
+        return    _dbContext.Posts.FirstOrDefaultAsync(x => x.Slug == slug && x.Status ==Domain.Enums.PostStatus.Published,cancellationToken);
+            
+        }
     }
 }
