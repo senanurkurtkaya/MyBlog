@@ -82,7 +82,30 @@ namespace MyBlog.API.Controllers
             }
             return NoContent();
         }
-        
 
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult>Update(Guid id , UpdatePostDto dto,CancellationToken cancellationToken)
+        {
+            try
+            {
+                var updated = await _postService.UpdateAsync(id, dto, cancellationToken);
+                if (!updated)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest();
+            }
+            catch(InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
+            }
+         
+        } 
     }    
 }

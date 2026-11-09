@@ -15,3 +15,20 @@ Content-Type: application/json
 POST {{MyBlog.API_HostAddress}}/api/posts/e1204050-a730-487f-aef1-f719017d8705/unpublish
 ###
 GET {{MyBlog.API_HostAddress}}/api/posts/yayindan-kaldirma-testi
+###
+PUT {{MyBlog.API_HostAddress}}/api/posts/e1204050-a730-487f-aef1-f719017d8705
+Content-Type: application/json
+
+{
+  "title": "Güncellenmiþ Test Yazýsý",
+  "slug": "yayindan-kaldirma-testi",
+  "summary": "Yazý düzenleme testi.",
+  "contentMarkdown": "# Yeni baþlýk\n\nYazýnýn içeriði güncellendi."
+}
+
+###
+POST {{MyBlog.API_HostAddress}}/api/posts/e1204050-a730-487f-aef1-f719017d8705/publish
+
+###
+GET {{MyBlog.API_HostAddress}}/api/posts/yayindan-kaldirma-testi
+Accept: application/json
