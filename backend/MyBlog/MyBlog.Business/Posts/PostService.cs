@@ -127,5 +127,45 @@ namespace MyBlog.Business.Posts
            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return true;
         }
+
+        public async Task<bool> UpdateAsync(Guid id, UpdatePostDto dto, CancellationToken cancellationToken = default)
+        {
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
+            if(post == null)
+            {
+                return false;
+                 
+            }
+            ArgumentNullException.ThrowIfNull(dto);
+            if (string.IsNullOrWhiteSpace(dto.Title))
+            {
+                throw new ArgumentException("yazı başlığı boş olamaz");
+            }
+            if (string.IsNullOrWhiteSpace(dto.Slug))
+            {
+                throw new ArgumentException("yazı slug'ı boş olamaz");
+            }
+             var title = dto.Title.Trim();
+             var slug = dto.Slug.Trim();
+
+            if (post.Slug != slug)
+            {
+                var slugExists = await _postRepository.ExistsBySlugAsync(slug, cancellationToken);
+
+                if (slugExists)
+                {
+                    throw new InvalidOperationException("Bu slug zaten kullanılıyor.");
+                }
+
+                post.ChangeSlug(slug);
+            }
+
+            post.ChangeTitle(title);
+            post.ChangeSummary(dto.Summary);
+            post.ChangeContent(dto.ContentMarkdown);
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return true;
+        }
     } 
 }
