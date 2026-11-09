@@ -67,5 +67,65 @@ namespace MyBlog.Business.Posts
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return post.Id;
         }
-    }
+
+        public async Task<List<PostListItemDto>> GetPublishedAsync(CancellationToken cancellationToken = default)
+        {
+            var posts = await _postRepository.GetPublishedAsync(cancellationToken);
+            return posts.Select(x => new PostListItemDto
+            {
+                Title =x.Title,
+                Slug =x.Slug,
+                PublishedAtUtc =x.PublishedAtUtc,
+                Summary =x.Summary,
+               
+               
+
+            }).ToList();
+
+        }
+
+        public async Task<PostDetailDto?> GetPublishedBySlugAsync(string slug, CancellationToken cancellationToken = default)
+        {
+           var post = await _postRepository.GetPublishedBySlugAsync(slug ,cancellationToken);
+
+            if(post == null)
+            {
+                return null;
+            }
+        
+            var dto = new PostDetailDto();
+            dto.Title = post.Title;
+            dto.Slug = post.Slug;
+            dto.Summary = post.Summary;
+            dto.ContentMarkdown =post.ContentMarkdown;
+            dto.PublishedAtUtc = post.PublishedAtUtc;
+            return dto;
+        }
+
+        public async Task<bool> PublishAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+          var post = await  _postRepository.GetByIdAsync(id , cancellationToken);
+
+            if(post == null)
+            {
+                return false;
+            }
+            post.Publish();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+
+        public async Task<bool> UnpublishAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
+           if (post == null)
+            {
+                return false;
+            }
+           post.Unpublish();
+           await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+    } 
 }

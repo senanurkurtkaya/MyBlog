@@ -11,6 +11,11 @@ namespace MyBlog.Business.Posts
     {
         Task<Guid> CreateAsync(CreatePostDto dto, CancellationToken cancellationToken = default);
 
+        Task<List<PostListItemDto>> GetPublishedAsync(CancellationToken CancellationToken = default);
+        Task<bool> PublishAsync(Guid id ,CancellationToken cancellationToken= default);
+        Task<bool> UnpublishAsync(Guid id, CancellationToken cancellationToken = default);
 
+        Task<PostDetailDto?> GetPublishedBySlugAsync(string slug ,CancellationToken cancellationToken = default);
+            
     }
 }
