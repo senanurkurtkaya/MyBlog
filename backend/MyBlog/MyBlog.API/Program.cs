@@ -2,10 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Business.Categories;
 using MyBlog.Business.Posts;
-using MyBlog.Data.Contexts;
-using MyBlog.Data.Repositories.Categories;
-using MyBlog.Data.Repositories.Posts;
-using MyBlog.Data.UnitOfWork;
+using MyBlog.Data;
 
 namespace MyBlog.API
 {
@@ -15,17 +12,12 @@ namespace MyBlog.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-
-            builder.Services.AddDbContext<MyBlogDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("MyBlog")));
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
+            
             builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IPostRepository,PostRepository>();
+           
             builder.Services.AddScoped<IPostService, PostService>();
             var app = builder.Build();
 

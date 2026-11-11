@@ -1,5 +1,9 @@
 
+using MyBlog.Business.Categories;
+using MyBlog.Business.Posts;
+using MyBlog.Data;
 namespace MyBlog.AdminAPI
+
 {
     public class Program
     {
@@ -7,15 +11,14 @@ namespace MyBlog.AdminAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddControllers();   
             builder.Services.AddOpenApi();
+            builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IPostService, PostService>();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();

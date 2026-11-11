@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace MyBlog.Data.Contexts
 {
-    public class MyBlogDbContext:DbContext
+    public class AddMyBlogData:DbContext
     {
-        public MyBlogDbContext(DbContextOptions<MyBlogDbContext> options ):base(options)
+        public AddMyBlogData(DbContextOptions<AddMyBlogData> options ):base(options)
         {
 
         }
@@ -28,7 +28,7 @@ namespace MyBlog.Data.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MyBlogDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AddMyBlogData).Assembly);
         }
     }
 }

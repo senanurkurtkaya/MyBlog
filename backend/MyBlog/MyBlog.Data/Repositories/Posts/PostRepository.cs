@@ -11,9 +11,9 @@ namespace MyBlog.Data.Repositories.Posts
 {
     public class PostRepository : IPostRepository
     {
-        private readonly MyBlogDbContext _dbContext;
+        private readonly AddMyBlogData _dbContext;
 
-        public PostRepository(MyBlogDbContext myBlogDbContext)
+        public PostRepository(AddMyBlogData myBlogDbContext)
         {
 
             _dbContext = myBlogDbContext;
@@ -26,6 +26,12 @@ namespace MyBlog.Data.Repositories.Posts
         public Task<bool> ExistsBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
            return _dbContext.Posts.AnyAsync(x => x.Slug == slug , cancellationToken);
+        }
+
+        public Task<List<Post>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            return _dbContext.Posts.AsNoTracking().ToListAsync(cancellationToken);
+            
         }
 
         public async Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
