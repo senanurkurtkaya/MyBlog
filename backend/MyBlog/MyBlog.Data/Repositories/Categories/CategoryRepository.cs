@@ -11,9 +11,9 @@ namespace MyBlog.Data.Repositories.Categories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly MyBlogDbContext _dbContext;
+        private readonly AddMyBlogData _dbContext;
 
-        public CategoryRepository(MyBlogDbContext dbContext)
+        public CategoryRepository(AddMyBlogData dbContext)
         {
             _dbContext = dbContext;
         }

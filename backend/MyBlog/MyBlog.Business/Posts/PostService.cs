@@ -57,10 +57,12 @@ namespace MyBlog.Business.Posts
 
             return posts.Select(post => new PostListItemDto
             {
+                Id = post.Id,
                 Title = post.Title,
                 Slug = post.Slug,
                 PublishedAtUtc = post.PublishedAtUtc,
-                Summary = post.Summary
+                Summary = post.Summary,
+                Status = post.Status
             }).ToList();
         }
 
@@ -77,11 +79,13 @@ namespace MyBlog.Business.Posts
 
             return new PostDetailDto
             {
+                
                 Title = post.Title,
                 Slug = post.Slug,
                 Summary = post.Summary,
                 ContentMarkdown = post.ContentMarkdown,
-                PublishedAtUtc = post.PublishedAtUtc
+                PublishedAtUtc = post.PublishedAtUtc,
+                Status = post.Status
             };
         }
 
@@ -195,6 +199,40 @@ namespace MyBlog.Business.Posts
             }
 
             return (title, slug, summary);
+        }
+
+        public async Task<List<PostListItemDto>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+          var posts = await _postRepository.GetAllAsync(cancellationToken);
+            return posts.Select(post => new PostListItemDto
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Slug = post.Slug,
+                PublishedAtUtc = post.PublishedAtUtc,
+                Summary = post.Summary,
+                Status = post.Status,
+                
+            }).ToList();
+        }
+
+        public async Task<PostDetailDto?> GetByIdAsync(Guid id ,CancellationToken cancellationToken = default)
+        {
+            var post = await _postRepository.GetByIdAsync(id, cancellationToken);
+            if(post == null)
+            {
+                return null;
+            }
+            return new PostDetailDto
+            {
+
+                Title = post.Title,
+                Slug = post.Slug,
+                Summary = post.Summary,
+                ContentMarkdown = post.ContentMarkdown,
+                PublishedAtUtc = post.PublishedAtUtc,
+                Status = post.Status
+            };
         }
     }
 }

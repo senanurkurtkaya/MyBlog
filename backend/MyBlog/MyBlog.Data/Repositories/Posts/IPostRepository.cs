@@ -16,6 +16,7 @@ namespace MyBlog.Data.Repositories.Posts
         Task<List<Post>> GetPublishedAsync(CancellationToken cancellationToken =default);
         Task<Post?> GetByIdAsync(Guid id , CancellationToken cancellationToken = default);
         Task<Post?> GetPublishedBySlugAsync(string slug, CancellationToken cancellationToken = default);
+        Task<List<Post>> GetAllAsync(CancellationToken cancellationToken = default);
         
     }
 }

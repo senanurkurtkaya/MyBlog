@@ -10,9 +10,9 @@ namespace MyBlog.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MyBlogDbContext _dbContext;
+        private readonly AddMyBlogData _dbContext;
 
-        public UnitOfWork(MyBlogDbContext dbContext)
+        public UnitOfWork(AddMyBlogData dbContext)
         {
             _dbContext = dbContext;
         }
