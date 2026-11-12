@@ -1,9 +1,9 @@
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MyBlog.Business.Categories;
 using MyBlog.Business.Posts;
 using MyBlog.Data;
-namespace MyBlog.AdminAPI
 
+namespace MyBlog.AdminAPI
 {
     public class Program
     {
@@ -11,9 +11,31 @@ namespace MyBlog.AdminAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();   
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority =
+                        builder.Configuration["Keycloak:Authority"];
+
+                    options.Audience =
+                        builder.Configuration["Keycloak:Audience"];
+
+                    options.RequireHttpsMetadata =
+                        !builder.Environment.IsDevelopment();
+
+                    options.MapInboundClaims = false;
+                    options.TokenValidationParameters.RoleClaimType = "roles";
+                });
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-            builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
+
+            builder.Services.AddMyBlogData(
+                builder.Configuration.GetConnectionString("MyBlog"));
+
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPostService, PostService>();
 
@@ -26,8 +48,8 @@ namespace MyBlog.AdminAPI
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

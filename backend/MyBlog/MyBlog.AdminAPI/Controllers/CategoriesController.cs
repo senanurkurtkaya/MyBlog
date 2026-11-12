@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Business.Categories;
 using MyBlog.Business.Categories.Dtos;
 using MyBlog.Domain.Models.Categories;
@@ -9,6 +10,7 @@ namespace MyBlog.AdminAPI.Controllers
 
     [ApiController]
     [Route("api/categories")]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController :ControllerBase
     {
         private readonly ICategoryService _categoryService;
