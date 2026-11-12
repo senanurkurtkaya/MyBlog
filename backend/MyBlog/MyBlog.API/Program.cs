@@ -17,7 +17,6 @@ namespace MyBlog.API
             builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
             
             builder.Services.AddScoped<ICategoryService, CategoryService>();
-           
             builder.Services.AddScoped<IPostService, PostService>();
             var app = builder.Build();
 
@@ -28,6 +27,8 @@ namespace MyBlog.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

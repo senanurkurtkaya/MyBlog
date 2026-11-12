@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Business.Posts;
 using MyBlog.Business.Posts.Dtos;
 
@@ -6,6 +7,7 @@ namespace MyBlog.AdminAPI.Controllers
 {
     [ApiController]
     [Route("api/posts")]
+    [Authorize(Roles = "Admin")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
