@@ -9,7 +9,7 @@ namespace MyBlog.Business.Posts
 {
     public interface IPostService
     {
-        Task<Guid> CreateAsync(CreatePostDto dto, CancellationToken cancellationToken = default);
+        Task<Guid> CreateAsync(CreatePostDto dto, Guid authorId , CancellationToken cancellationToken = default);
 
         Task<List<PostListItemDto>> GetPublishedAsync(CancellationToken CancellationToken = default);
         Task<bool> PublishAsync(Guid id ,CancellationToken cancellationToken= default);

@@ -10,7 +10,7 @@ namespace MyBlog.Business.Posts.Dtos
     {
         public string Title { get; set; }=string.Empty;
         public string Slug { get; set; } = string.Empty;
-        public Guid AuthorId { get; set; }
+        //public Guid AuthorId { get; set; }
         public string? Summary { get; set; }
         public string? ContentMarkdown { get; set; }
     }

@@ -39,9 +39,16 @@ namespace MyBlog.AdminAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePostDto dto, CancellationToken cancellationToken)
         {
+            var subject = User.FindFirst("sub")?.Value;
+            var isValid = Guid.TryParse(subject, out var authorId);
+
+            if (!isValid || authorId == Guid.Empty)
+            {
+                return Unauthorized();
+            }
             try
             {
-                var id = await _postService.CreateAsync(dto, cancellationToken);
+                var id = await _postService.CreateAsync(dto,authorId, cancellationToken);
                 return CreatedAtAction(nameof(GetById), new { id }, new { id });
             }
             catch (InvalidOperationException ex)
