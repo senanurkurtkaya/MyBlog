@@ -23,12 +23,12 @@ namespace MyBlog.Business.Posts
         }
 
         public async Task<Guid> CreateAsync(
-            CreatePostDto dto,
+            CreatePostDto dto,Guid authorId ,
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(dto);
 
-            if (dto.AuthorId == Guid.Empty)
+            if (authorId == Guid.Empty)
             {
                 throw new ArgumentException("Yazar kimliği boş olamaz.");
             }
@@ -43,7 +43,7 @@ namespace MyBlog.Business.Posts
             }
 
             var post = new Post(
-                title, slug, dto.AuthorId, summary ?? string.Empty, dto.ContentMarkdown);
+                title, slug, authorId, summary ?? string.Empty, dto.ContentMarkdown);
 
             _postRepository.Add(post);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
