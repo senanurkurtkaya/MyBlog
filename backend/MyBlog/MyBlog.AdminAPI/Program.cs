@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using MyBlog.Business.Categories;
-using MyBlog.Business.Posts;
+using MyBlog.Business;
 using MyBlog.Data;
 
 namespace MyBlog.AdminAPI
@@ -35,9 +34,7 @@ namespace MyBlog.AdminAPI
 
             builder.Services.AddMyBlogData(
                 builder.Configuration.GetConnectionString("MyBlog"));
-
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddMyBlogBusiness();
 
             var app = builder.Build();
 
