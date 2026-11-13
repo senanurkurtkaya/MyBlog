@@ -1,8 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
-using MyBlog.Business.Categories;
-using MyBlog.Business.Posts;
 using MyBlog.Data;
+using MyBlog.Business;
 
 namespace MyBlog.API
 {
@@ -15,9 +14,8 @@ namespace MyBlog.API
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
             builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
+            builder.Services.AddMyBlogBusiness();
             
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IPostService, PostService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,8 +25,6 @@ namespace MyBlog.API
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthentication();
 
             app.UseAuthorization();
 
