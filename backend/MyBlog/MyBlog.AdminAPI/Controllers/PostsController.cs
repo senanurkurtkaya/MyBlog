@@ -46,75 +46,46 @@ namespace MyBlog.AdminAPI.Controllers
             {
                 return Unauthorized();
             }
-            try
-            {
-                var id = await _postService.CreateAsync(dto,authorId, cancellationToken);
-                return CreatedAtAction(nameof(GetById), new { id }, new { id });
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(ex.Message);
-
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var id = await _postService.CreateAsync(dto, authorId, cancellationToken);
+            return CreatedAtAction(nameof(GetById), new { id }, new { id });
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id , UpdatePostDto dto , CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(Guid id, UpdatePostDto dto, CancellationToken cancellationToken)
         {
-            try
-            {
-              var updated = await  _postService.UpdateAsync(id, dto, cancellationToken);
-              if (!updated)
+
+            var updated = await _postService.UpdateAsync(id, dto, cancellationToken);
+            if (!updated)
             {
                 return NotFound();
             }
             return NoContent();
-
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPost("{id:guid}/publish")]
-        public async Task<IActionResult> PublishAsync(Guid id , CancellationToken cancellationToken)
+        public async Task<IActionResult> PublishAsync(Guid id, CancellationToken cancellationToken)
         {
-            try
-            {
-            var published = await _postService.PublishAsync(id , cancellationToken);
+
+            var published = await _postService.PublishAsync(id, cancellationToken);
             if (!published)
             {
                 return NotFound();
             }
             return NoContent();
 
-            }
-            catch (InvalidOperationException ex)
-            {
-               return Conflict(ex.Message);
-            }
         }
 
         [HttpPost("{id:guid}/unpublish")]
-        public async Task<IActionResult> UnPublishAsync(Guid id ,CancellationToken cancellationToken)
+        public async Task<IActionResult> UnPublishAsync(Guid id, CancellationToken cancellationToken)
         {
-          
-            var unpublished = await _postService.UnpublishAsync(id , cancellationToken);
+
+            var unpublished = await _postService.UnpublishAsync(id, cancellationToken);
             if (!unpublished)
             {
                 return NotFound();
             }
             return NoContent();
-         
+
         }
 
     }
