@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MyBlog.AdminAPI.ExceptionHandling;
 using MyBlog.Business;
 using MyBlog.Data;
 
@@ -28,15 +29,23 @@ namespace MyBlog.AdminAPI
                 });
 
             builder.Services.AddAuthorization();
-
-            builder.Services.AddControllers();
+            builder.Services
+                .AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                     options.ClientErrorMapping[404].Title = "Kaynak bulunamadý";
+                });
             builder.Services.AddOpenApi();
 
             builder.Services.AddMyBlogData(
                 builder.Configuration.GetConnectionString("MyBlog"));
             builder.Services.AddMyBlogBusiness();
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
             var app = builder.Build();
+            app.UseExceptionHandler();
+
 
             if (app.Environment.IsDevelopment())
             {

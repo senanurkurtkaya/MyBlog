@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyBlog.AdminAPI\MyBlog.AdminAPI.csproj" />
     <ProjectReference Include="..\MyBlog.Business\MyBlog.Business.csproj" />
     <ProjectReference Include="..\MyBlog.Data\MyBlog.Data.csproj" />
   </ItemGroup>

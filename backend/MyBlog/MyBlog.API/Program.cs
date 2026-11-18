@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Data;
 using MyBlog.Business;
+using MyBlog.API.ExceptionHandling;
 
 namespace MyBlog.API
 {
@@ -11,12 +12,20 @@ namespace MyBlog.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services
+                     .AddControllers()
+                      .ConfigureApiBehaviorOptions(options =>
+                      {
+                          options.ClientErrorMapping[404].Title = "Kaynak bulunamadý";
+                      });
             builder.Services.AddOpenApi();
             builder.Services.AddMyBlogData(builder.Configuration.GetConnectionString("MyBlog"));
             builder.Services.AddMyBlogBusiness();
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
             
             var app = builder.Build();
+            app.UseExceptionHandler();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
