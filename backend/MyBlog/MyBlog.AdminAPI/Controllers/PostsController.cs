@@ -18,9 +18,9 @@ namespace MyBlog.AdminAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromQuery] AdminPostListQueryDto query,CancellationToken cancellationToken)
         {
-            var posts = await _postService.GetAllAsync(cancellationToken);
+            var posts = await _postService.GetAdminListAsync(query ,cancellationToken);
             return Ok(posts);
         }
 
@@ -81,6 +81,18 @@ namespace MyBlog.AdminAPI.Controllers
 
             var unpublished = await _postService.UnpublishAsync(id, cancellationToken);
             if (!unpublished)
+            {
+                return NotFound();
+            }
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id ,CancellationToken cancellationToken)
+        {
+            var deleted = await _postService.DeleteAsync(id, cancellationToken);
+            if(deleted == false)
             {
                 return NotFound();
             }

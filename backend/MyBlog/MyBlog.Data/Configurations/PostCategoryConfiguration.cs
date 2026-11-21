@@ -15,9 +15,12 @@ namespace MyBlog.Data.Configurations
         public void Configure(EntityTypeBuilder<PostCategory> builder)
         {
             builder.HasKey(x => new {x.PostId ,x.CategoryId});
-            builder.HasOne<Post>().WithMany(x => x.PostCategories).HasForeignKey(x => x.PostId);
-            builder.HasOne<Category>().WithMany().HasForeignKey(x => x.CategoryId);
-       
+            builder.HasOne<Post>().WithMany(x => x.PostCategories)
+                .HasForeignKey(x => x.PostId); builder
+                .HasOne(x => x.Category)
+                .WithMany()
+                .HasForeignKey(x => x.CategoryId);
+
         }
       
     }

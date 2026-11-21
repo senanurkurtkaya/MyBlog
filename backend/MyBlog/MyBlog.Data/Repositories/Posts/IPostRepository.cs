@@ -17,6 +17,8 @@ namespace MyBlog.Data.Repositories.Posts
         Task<Post?> GetByIdAsync(Guid id , CancellationToken cancellationToken = default);
         Task<Post?> GetPublishedBySlugAsync(string slug, CancellationToken cancellationToken = default);
         Task<List<Post>> GetAllAsync(CancellationToken cancellationToken = default);
-        
+        Task<PostListResult> GetAdminListAsync(PostListQuery query, CancellationToken cancellationToken = default);
+        public void Remove(Post post);
+        Task<PostListResult> GetPublicListAsync(PostListQuery query, CancellationToken cancellationToken = default);
     }
 }

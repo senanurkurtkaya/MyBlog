@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MyBlog.Domain.Models.Categories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyBlog.Domain.Models.Categories;
 
 namespace MyBlog.Domain.Models.Posts
 {
@@ -25,5 +27,6 @@ namespace MyBlog.Domain.Models.Posts
             CategoryId = categoryId;
         }
 
+        public Category Category { get; private set; } = null!;
     }
 }

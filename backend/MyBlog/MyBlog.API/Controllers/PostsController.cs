@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Business.Posts;
+using MyBlog.Business.Posts.Dtos;
 
 namespace MyBlog.API.Controllers
 {
@@ -15,10 +16,10 @@ namespace MyBlog.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPublished(
+        public async Task<IActionResult> GetPublished([FromQuery] PublicPostListQueryDto query,
             CancellationToken cancellationToken)
         {
-            var posts = await _postService.GetPublishedAsync(cancellationToken);
+            var posts = await _postService.GetPublicListAsync(query ,cancellationToken);
             return Ok(posts);
         }
 

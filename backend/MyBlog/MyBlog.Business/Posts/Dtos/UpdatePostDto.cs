@@ -12,6 +12,7 @@ namespace MyBlog.Business.Posts.Dtos
         public string Slug { get; set; } = string.Empty;
         public string? Summary { get; set; }
         public string ContentMarkdown { get; set; } = string.Empty;
+        public List<Guid> CategoryIds { get; set; } = new();
 
 
     }

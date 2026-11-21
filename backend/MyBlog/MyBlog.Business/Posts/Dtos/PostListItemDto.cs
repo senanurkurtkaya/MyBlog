@@ -1,9 +1,5 @@
-﻿using MyBlog.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyBlog.Business.Categories.Dtos;
+using MyBlog.Domain.Enums;
 
 namespace MyBlog.Business.Posts.Dtos
 {
@@ -15,5 +11,9 @@ namespace MyBlog.Business.Posts.Dtos
         public string? Summary { get; set; }
         public DateTime? PublishedAtUtc { get; set; }
         public  PostStatus  Status { get; set; }
+        public DateTime CreatedAtUtc { get; set; }
+        public DateTime? UpdatedAtUtc { get; set; }
+        public int ReadingTimeMinutes { get; set; }
+        public List<CategoryDto> Categories { get; set; } = new();
     }
 }

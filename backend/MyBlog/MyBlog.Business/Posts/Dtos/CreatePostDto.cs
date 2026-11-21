@@ -13,5 +13,6 @@ namespace MyBlog.Business.Posts.Dtos
         //public Guid AuthorId { get; set; }
         public string? Summary { get; set; }
         public string? ContentMarkdown { get; set; }
+        public List<Guid> CategoryIds { get; set; } = new();
     }
 }
