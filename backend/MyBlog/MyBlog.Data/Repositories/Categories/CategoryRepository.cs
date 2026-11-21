@@ -22,7 +22,11 @@ namespace MyBlog.Data.Repositories.Categories
            _dbContext.Categories.Add(category);
         }
 
- 
+        public Task<int> CountByIdsAsync(IReadOnlyCollection<Guid> categoryIds, CancellationToken cancellationToken = default)
+        {
+           return _dbContext.Categories.CountAsync(x => categoryIds.Contains(x.Id), cancellationToken);
+        }
+
         public Task<bool> ExistsBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
             return _dbContext.Categories.AnyAsync(x => x.Slug == slug , cancellationToken);

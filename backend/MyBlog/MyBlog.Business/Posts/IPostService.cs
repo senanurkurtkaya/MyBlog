@@ -18,6 +18,9 @@ namespace MyBlog.Business.Posts
         Task<bool> UpdateAsync(Guid id, UpdatePostDto dto, CancellationToken cancellationToken =default);
         Task<List<PostListItemDto>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<PostDetailDto?> GetByIdAsync(Guid id,CancellationToken cancellationToken=default);
+        Task<AdminPostListResultDto>GetAdminListAsync(AdminPostListQueryDto query ,CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(Guid id ,CancellationToken cancellationtoken);
+        Task<PublicPostListResultDto> GetPublicListAsync(PublicPostListQueryDto query, CancellationToken cancellationToken = default);
 
 
     }

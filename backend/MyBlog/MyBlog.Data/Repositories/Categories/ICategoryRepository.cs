@@ -19,5 +19,6 @@ namespace MyBlog.Data.Repositories.Categories
         public Task<List<Category>> GetAllAsync(CancellationToken cancellationToken = default);
 
         public Task<Category?> GetByIdAsync(Guid id ,CancellationToken cancellationToken =default);
+        public Task<int>CountByIdsAsync(IReadOnlyCollection<Guid>categoryIds , CancellationToken cancellationToken = default);
     }
 }
